@@ -1,0 +1,42 @@
+﻿@model Humidity.Models.SensorReadingValue
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SensorReadingValue</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.sensorReadingID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sensorReadingID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.readingValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.readingValue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.readingValueType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.readingValueType)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

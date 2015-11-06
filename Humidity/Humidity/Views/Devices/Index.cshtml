@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Humidity.Models.ReadingsForDevice>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.device.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.device.deviceTypeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.device.location)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.device.name)
+            <ul>
+            @foreach (var reading in item.readings)
+            {
+               <li>
+                    @Html.DisplayFor(modelReading => reading.ID)
+                </li>
+            }
+            </ul>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.device.deviceTypeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.device.location)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.device.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.device.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.device.ID })
+        </td>
+    </tr>
+}
+
+</table>

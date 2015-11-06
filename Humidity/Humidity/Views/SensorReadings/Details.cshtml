@@ -1,0 +1,26 @@
+﻿@model Humidity.Models.SensorReport
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+
+    <h4>SensorReading for Device @Html.DisplayFor(model => model.reading.ID)</h4>
+    <hr />
+   
+    @foreach (var item in Model.query)
+    {
+        <li>
+            @Html.DisplayFor(modelItem => item.readingValue)
+        </li>
+            
+               
+            
+        
+    }
+
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
