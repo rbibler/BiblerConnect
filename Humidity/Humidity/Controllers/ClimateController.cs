@@ -10,17 +10,27 @@ using Humidity.Models;
 
 namespace Humidity.Controllers
 {
-    public class SensorReadingsController : Controller
+    public class ClimateController : Controller
     {
         private BiblerConnectDBContext db = new BiblerConnectDBContext();
 
-        // GET: SensorReadings
+        // GET: Climate
         public ActionResult Index()
         {
-            return View(db.SensorReadings.ToList());
+            var mostRecentQuery = from sr in db.SensorReadings
+                                  orderby sr.timeLogged descending
+                                  select sr;
+            IQueryable < SensorReadingValue > values = from srv in db.SensorReadingValues
+                                                       where (
+                                                       mostRecentQuery
+                                                       ).FirstOrDefault().ID == srv.sensorReadingID
+                                                       select srv;
+            
+
+            return View(new ClimateReading { reading = mostRecentQuery.First<SensorReading>(), values = values });
         }
 
-        // GET: SensorReadings/Details/5
+        // GET: Climate/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -28,22 +38,20 @@ namespace Humidity.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             SensorReading sensorReading = db.SensorReadings.Find(id);
-            var allReadings = from o in db.SensorReadingValues
-                              join a in db.SensorReadings
-                              on o.sensorReadingID equals a.ID
-                              where o.sensorReadingID == id
-                              select o;
-            var ret = new SensorReport { values = allReadings, reading = sensorReading };
-            return View(ret);
+            if (sensorReading == null)
+            {
+                return HttpNotFound();
+            }
+            return View(sensorReading);
         }
 
-        // GET: SensorReadings/Create
+        // GET: Climate/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: SensorReadings/Create
+        // POST: Climate/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -60,7 +68,7 @@ namespace Humidity.Controllers
             return View(sensorReading);
         }
 
-        // GET: SensorReadings/Edit/5
+        // GET: Climate/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -75,7 +83,7 @@ namespace Humidity.Controllers
             return View(sensorReading);
         }
 
-        // POST: SensorReadings/Edit/5
+        // POST: Climate/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -91,7 +99,7 @@ namespace Humidity.Controllers
             return View(sensorReading);
         }
 
-        // GET: SensorReadings/Delete/5
+        // GET: Climate/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -106,7 +114,7 @@ namespace Humidity.Controllers
             return View(sensorReading);
         }
 
-        // POST: SensorReadings/Delete/5
+        // POST: Climate/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

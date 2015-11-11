@@ -181,6 +181,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChartController.cs" />
+    <Compile Include="Controllers\ClimateController.cs" />
     <Compile Include="Controllers\DevicesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -198,10 +200,12 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BiblerConnectDBContext.cs" />
+    <Compile Include="Models\ClimateReading.cs" />
     <Compile Include="Models\Devices.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ReadingsForDevice.cs" />
+    <Compile Include="Models\SensorAverages.cs" />
     <Compile Include="Models\SensorReading.cs" />
     <Compile Include="Models\SensorReadingValue.cs" />
     <Compile Include="Models\SensorReport.cs" />
@@ -219,7 +223,10 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\Bibler.pubxml" />
+    <None Include="Properties\PublishProfiles\BiblerConnect.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -285,6 +292,16 @@
     <Content Include="Views\SensorReadings\Details.cshtml" />
     <Content Include="Views\SensorReadings\Edit.cshtml" />
     <Content Include="Views\SensorReadings\Index.cshtml" />
+    <Content Include="Views\Climate\Create.cshtml" />
+    <Content Include="Views\Climate\Delete.cshtml" />
+    <Content Include="Views\Climate\Details.cshtml" />
+    <Content Include="Views\Climate\Edit.cshtml" />
+    <Content Include="Views\Climate\Index.cshtml" />
+    <Content Include="Views\Chart\Create.cshtml" />
+    <Content Include="Views\Chart\Delete.cshtml" />
+    <Content Include="Views\Chart\Details.cshtml" />
+    <Content Include="Views\Chart\Edit.cshtml" />
+    <Content Include="Views\Chart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

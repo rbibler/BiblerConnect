@@ -1,0 +1,198 @@
+﻿@model Humidity.Models.ClimateReading
+
+@{
+    ViewBag.Title = "Current Conditions";
+    ViewBag.RefreshTime = 30;
+}
+
+@{ 
+    var timeLogged = TimeZoneInfo.ConvertTimeFromUtc(Model.reading.timeLogged, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time")); 
+    var humidity = "0";
+    var temp = "0";
+    var values = Model.values.ToArray();
+    if(values.Length > 0)
+    {
+        humidity = (string) values[0].readingValue;
+    }
+    if(values. Length >= 1)
+    {
+        temp = (string) values[1].readingValue;
+    }
+}
+<META HTTP-EQUIV="REFRESH" CONTENT="30">
+<h2>Current Conditions</h2>
+<style>
+    canvas {
+        position:absolute;
+        top: 0;
+        left:0;
+    }
+    h2 {
+        text-align:center;
+    }
+    #chartDiv {
+        margin: auto;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+    #timeDiv {
+        text-align:center;
+    }
+    #valuesDiv {
+        position:absolute;
+        display: table;
+        width:800px;
+        height:400px;
+        font-size:40px;
+    }
+    #humP {
+        color:steelblue;
+         text-align:center;
+        vertical-align:middle;
+        display:table-cell;
+    }
+    #tempP {
+        color:orangered;
+         text-align:center;
+        vertical-align:middle;
+        display:table-cell;
+    }
+    .wrapper canvas {
+            position: absolute;
+            margin:0 auto;
+            top: 0;
+            left: 0;
+        }
+    @@media (max-width: 767px) {
+        .wrapper {
+            position: relative;
+            width: 400px;
+            height: 200px;  
+        }
+        #humCanvas {
+            width: 400px;
+            height: 200px;
+        }
+
+        #tempCanvas {
+            width: 400px;
+            height: 200px;
+        }
+        #valuesDiv {
+            width:400px;
+            height:200px;
+            font-size:20px;
+        }
+        
+    }
+
+    @@media (min-width: 768px) {
+      
+        .wrapper {
+            position: relative;
+            width: 800px;
+            height: 400px;
+        }
+        .wrapper canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #humCanvas {
+            width: 800px;
+            height: 400px;
+        }
+        #tempCanvas {
+            width: 800px;
+            height: 400px;
+        }
+        #valuesDiv {
+            width: 800px;
+            height: 400px;
+            font-size: 40px;
+        }
+
+    }
+
+</style>
+
+<div id="chartDiv" class="wrapper">
+    <canvas class="canvas" id="tempCanvas" ></canvas>
+    <canvas class="canvas" id="humCanvas" ></canvas>
+    <div id="valuesDiv">
+        <p id="humP">@humidity</br>@temp</p>
+        
+    </div>
+</div>
+<div id="timeDiv"><p style="font-size: 10px">Time Logged: @timeLogged</p></div>
+<script>
+    var tempVal = "@temp";
+    var tempRem = 100 - tempVal;
+    var humVal = "@humidity";
+    var humRem = 100 - humVal;
+    var humData = [
+            {
+                 value: humVal,
+                color: "#3399ff",
+                highlight: "#96CBFF",
+                label: "Humidity"
+            },
+            {
+                value: humRem,
+                color: "#FFFFFF",
+                highlight: "#FFFFFF",
+                label: ""
+            },
+           
+           
+        ];
+    var humOptions = {
+        responsive: true,
+        segmentShowStroke: true,
+        segmentStrokeColor: "#99CCFF",
+        segmentStrokeWidth: 1,
+        percentageInnerCutout: 80,
+        animationSteps: 100,
+        animationEasing: "easeOutBounce",
+        animationRotate: true,
+        animationScale: false,
+        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+    }
+
+    var tempData = [
+           {
+               value: tempVal,
+               color: "#FF6600",
+               highlight: "#FFD1B3",
+               label: "Temperature"
+           },
+           {
+               value: tempRem,
+               color: "#FFFFFF",
+               highlight: "#FFFFFF",
+               label: ""
+           },
+
+
+    ];
+    var tempOptions = {
+        responsive: true,
+        segmentShowStroke: true,
+        segmentStrokeColor: "#FFD1B3",
+        segmentStrokeWidth: 1,
+        percentageInnerCutout: 50,
+        animationSteps: 100,
+        animationEasing: "easeOutBounce",
+        animationRotate: true,
+        animationScale: false,
+        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+    }
+    var humCtx = document.getElementById("humCanvas").getContext("2d");
+    var tempCtx = document.getElementById("tempCanvas").getContext("2d");
+    var myNewChart = new Chart(tempCtx).Doughnut(tempData, tempOptions);
+    var myNewLineChart = new Chart(humCtx).Doughnut(humData, humOptions);
+   
+</script>
+

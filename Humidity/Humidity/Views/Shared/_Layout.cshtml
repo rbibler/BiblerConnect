@@ -3,13 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="@ViewBag.RefreshTime">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("/bundles/Chart");
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -21,8 +24,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Devices", "Index", "Devices")</li>
-                    <li>@Html.ActionLink("Readings", "Index", "SensorReadings")</li>
+                    <li>@Html.ActionLink("Current Conditions", "Index", "Climate")</li>
+                    <li>@Html.ActionLink("Readings", "Index", "Chart")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

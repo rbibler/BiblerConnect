@@ -7,7 +7,8 @@ namespace Humidity.Models
 {
     public class SensorReport
     {
-       public IQueryable<SensorReadingValue> query { get; set; }
+       public IQueryable<SensorReadingValue> values { get; set; }
        public SensorReading reading { get; set; }
+        public IQueryable<float> humidity { get; set; }
     }
 }
